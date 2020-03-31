@@ -1,6 +1,4 @@
-package support;
-
-import pages.Discussion;
+package pages;
 
 public class LoggedInUser {
 	public Discussion createDiscussion(Discussion.DiscussionBuilder body){

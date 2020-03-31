@@ -1,4 +1,4 @@
-package dto;
+package dtos;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,14 +6,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RegistrationDTO {
-	private String userName;
-	private String password;
+	private LogInDTO logInDTO;
 	private String confirmPassword;
 	private String email;
 
-	public RegistrationDTO(String userName, String password, String confirmPassword, String email) {
-		this.userName = userName;
-		this.password = password;
+	public RegistrationDTO(LogInDTO logInDTO, String confirmPassword, String email) {
+		this.logInDTO = logInDTO;
 		this.confirmPassword = confirmPassword;
 		this.email = email;
 	}

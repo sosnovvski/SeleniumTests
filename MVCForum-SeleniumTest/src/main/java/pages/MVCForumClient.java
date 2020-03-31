@@ -1,15 +1,15 @@
 package pages;
 
-import dto.RegistrationDTO;
+import dtos.LogInDTO;
+import dtos.RegistrationDTO;
 import support.Browser;
-import support.LoggedInUser;
+import support.TestDefaults;
 
-public class MVCForumClient extends RegistrationPage {
+public class MVCForumClient {
 	private Browser browser;
 	private static final String HOME_PAGE_URL = "http://localhost";
 
 	public MVCForumClient(Browser browser) {
-		super(browser);
 		this.browser = browser;
 	}
 
@@ -19,12 +19,11 @@ public class MVCForumClient extends RegistrationPage {
 	}
 
 	public LoggedInUser RegisterNewUserAndLogIn() {
-		var username = "losowyUser"; //Guid.NewGuid().toString();
-		final String PASSWORD = "123456789";
+		LogInDTO logInDTO = new LogInDTO("losowyUser", "123456789"); //Guid.NewGuid().toString();
 		final String E_MAIL = "abc@def.com";
 
-		RegistrationPage registrationPage = GoToRegistrationPage();
-		RegistrationDTO registrationDTO = new RegistrationDTO(username, PASSWORD, PASSWORD, E_MAIL);
+		RegistrationPage registrationPage = new RegistrationPage(browser);
+		RegistrationDTO registrationDTO = new RegistrationDTO(logInDTO, logInDTO.getPassword(), E_MAIL);
 		registrationPage.register(registrationDTO);
 
 		return new LoggedInUser();
@@ -32,5 +31,14 @@ public class MVCForumClient extends RegistrationPage {
 
 	public LatestDiscussions latestDiscussions() {
 		return null;
+	}
+
+	public LoggedInAdmin LogInAsAdmin() {
+		LogInDTO logInDTO = new LogInDTO(TestDefaults.ADMIN_USER_NAME, TestDefaults.ADMIN_PASSWORD);
+
+		LoginPage loginPage = new LoginPage(browser);
+		loginPage.logIn(logInDTO);
+
+		return new LoggedInAdmin();
 	}
 }

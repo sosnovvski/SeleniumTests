@@ -1,15 +1,11 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import dto.RegistrationDTO;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
+import dtos.RegistrationDTO;
 import support.Browser;
 
 class RegistrationPage {
@@ -28,22 +24,23 @@ class RegistrationPage {
 	@FindBy(id = "Email")
 	private WebElement email;
 
+	@FindBy(className = "form-register")
+	private WebElement formRegister;
+
 	public RegistrationPage(Browser browser) {
+		browser.find(By.className("auto-register")).
+				click();
 		this.browser = browser;
 		PageFactory.initElements(browser.getDriver(), this);
 	}
 
-	protected RegistrationPage GoToRegistrationPage() {
-		browser.find(By.className("auto-register")).
-				click();
-		return new RegistrationPage(browser);
-	}
-
 	protected void register(RegistrationDTO registrationDTO) {
-		username.sendKeys(registrationDTO.getUserName());
-		password.sendKeys(registrationDTO.getPassword());
+		username.sendKeys(registrationDTO.getLogInDTO().getUserName());
+		password.sendKeys(registrationDTO.getLogInDTO().getPassword());
 		confirmPassword.sendKeys(registrationDTO.getConfirmPassword());
 		email.sendKeys(registrationDTO.getEmail());
+
+		formRegister.submit();
 	}
 
 }
